@@ -27,5 +27,9 @@ int print_str(va_list);
 int print_char(va_list);
 int print_perc(va_list);
 int _putchar(char c);
+int print_int(va_list);
+int unsigned_int(va_list);
+int print_num(va_list);
+int unsigned_num(unsigned int);
 
 #endif
