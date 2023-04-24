@@ -1,60 +1,96 @@
 #include "main.h"
+
 /**
-  * _printf - takes a format string and variable arguments
-  * @format: string to be formatted
-  * Return: the number of characters printed
-  */
-int _printf(const char *format, ...)
+ * format_string - receives a format string and a list of conversion functions
+ * and arguments, and prints the formatted string
+ *
+ * @format: null-terminated string containing the characters to be printed
+ * @func_list: array of conv structs that map format specifiers
+ * to conversion functions
+ * @list: va_list of arguments to be printed
+ * Return: total number of characters printed
+ */
+
+int format_string(const char *format, conv func_list[], va_list list)
 {
-	va_list args;
-	int counter = 0;
+	int _a, _b, res, res_chars;
 
-	va_start(args, format);
-
-	while (*format != '\0')
+	res_chars = 0;
+	for (_a = 0; format[_a] != '\0'; _a += 1)
 	{
-		if (*format == '%')
+		if (format[_a] == '%')
 		{
-			format++;
-			if (*format == 'c')
+			for (_b = 0; func_list[_b].spec != NULL; _b += 1)
 			{
-				char c = va_arg(args, int);
-
-				_putchar(c);
-				counter += 1;
+				if (format[_a + 1] == func_list[_b].spec[0])
+				{
+					res = func_list[_b].f(list);
+					if (res == -1)
+						return (-1);
+					res_chars += res;
+					break;
+				}
 			}
-			else if (*format == 's')
+			if (func_list[_b].spec == NULL && format[_a + 1] != ' ')
 			{
-				char *str = va_arg(args, char*);
-
-				while (*str != '\0')
-				_putchar(*str++);
-				counter += 1;
+				if (format[_a + 1] != '\0')
+				{
+					_putchar(format[_a]);
+					_putchar(format[_a + 1]);
+					res_chars += 2;
+				}
+				else
+					return (-1);
 			}
-			else if (*format == '%')
-			{
-				_putchar('%');
-				counter += 1;
-			}
+			_a += 1;
 		}
 		else
 		{
-			_putchar(*format);
-			counter += 1;
+			_putchar(format[_a]);
+			res_chars += 1;
 		}
-		format += 1;
 	}
-	va_end(args);
-	return (counter);
+	return (res_chars);
 }
 
+#include "main.h"
 
 /**
- * _putchar - writes the character c to stdout
- * @c: The character to print
+ * _printf - prints formatted output to the standard output stream
+ * @format: a string of characters and format specifiers
  *
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
+ * Return: the number of characters printed (excluding the null byte)
+ */
+
+int _printf(const char *format, ...)
+{
+	int num;
+
+	conv func_list[] = {
+		{"c", print_char},
+		{"s", print_str},
+		{"%", print_perc},
+		{NULL, NULL}
+	};
+	va_list list;
+
+	if (format == NULL)
+	{
+		return (-1);
+	}
+
+	va_start(list, format);
+	num = format_string(format, func_list, list);
+	va_end(list);
+	return (num);
+}
+
+#include "main.h"
+
+/**
+ * _putchar - function to print char
+ * @c: char being passed
+ * Return: returning char
  */
 int _putchar(char c)
 {
