@@ -1,55 +1,62 @@
 #include "main.h"
-#include <stdio.h>
-#include <stdarg.h>
-
 /**
   * _printf - takes a format string and variable arguments
-  *  and prints the formatted output to stdout
-  *
   * @format: string to be formatted
-  *
   * Return: the number of characters printed
   */
-
 int _printf(const char *format, ...)
 {
-	va_list args, int counter = 0, va_start(args, format);
+	va_list args;
+	int counter = 0;
+
+	va_start(args, format);
 
 	while (*format != '\0')
 	{
-		switch (*format)
+		if (*format == '%')
 		{
-			case '%':
-				format++;
-		switch (*format)
-			case 'c':
+			format++;
+			if (*format == 'c')
+			{
 				char c = va_arg(args, int);
 
 				_putchar(c);
-				counter++;
-				break;
-			case 's':
+				counter += 1;
+			}
+			else if (*format == 's')
+			{
 				char *str = va_arg(args, char*);
 
 				while (*str != '\0')
-				{
-					_putchar(*str);
-					str++;
-					counter++;
-				}
-				break;
-			case '%':
+				_putchar(*str++);
+				counter += 1;
+			}
+			else if (*format == '%')
+			{
 				_putchar('%');
-				counter++;
-				break;
-		break;
-		default:
+				counter += 1;
+			}
+		}
+		else
+		{
 			_putchar(*format);
-			counter++;
-			break;
-	}
-	format++;
+			counter += 1;
+		}
+		format += 1;
 	}
 	va_end(args);
 	return (counter);
+}
+
+
+/**
+ * _putchar - writes the character c to stdout
+ * @c: The character to print
+ *
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
+ */
+int _putchar(char c)
+{
+	return (write(1, &c, 1));
 }
