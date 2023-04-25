@@ -25,7 +25,7 @@ char *rev_str(char *i)
 
 	my_memcpy(ret, i, count);
 
-	for (count = 0; index < count; index++, count--)
+	for (index = 0; index < count; index++, count--)
 	{
 		pip = ret[count - 1];
 		ret[count - 1] = ret[index];
