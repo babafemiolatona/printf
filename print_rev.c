@@ -28,5 +28,5 @@ int _rev(va_list args_arr)
 		_c--;
 	} while (_c >= 0);
 
-	return (_p);
+return (_p);
 }
