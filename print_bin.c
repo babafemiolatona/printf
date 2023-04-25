@@ -1,41 +1,44 @@
 #include "main.h"
 
 /**
-  * _bin - the function name
-  * @args_list: parameter of type va_list .
-  * Return: int .
+ * _bin - converts number to binary(base 2)
+ *
+ * @args_list: va_list of arguments
+ *
+ * Return: number of characters printed
  */
+
 int _bin(va_list args_list)
 {
-	unsigned int teta = va_arg(args_list, unsigned int);
-	int ret = 0;
-	int k = 31;
-	unsigned int pip;
+	int *ptr;
+	int teta = 0;
+	unsigned int _nin = va_arg(args_list, unsigned int);
+	unsigned int res = _nin;
+	int pip;
 
-	while (k >= 0)
+	do {
+		_nin /= 2, teta++;
+	} while (_nin / 2 != 0);
+	teta++;
+
+	ptr = malloc(teta * sizeof(int));
+
+	if (ptr == NULL)
 	{
-		pip = ((1 << k) & teta);
-		switch (pip >> k)
-		{
-		case 0:
-			if (ret > 0)
-			{
-				_putchar('0');
-			}
-			break;
-		case 1:
-			_putchar('1');
-			ret++;
-			break;
-		default:
-			break;
-		}
-		k--;
+		free(ptr);
+		return (0);
 	}
-	if (ret == 0)
-	{
-		ret++;
-		_putchar('0');
-	}
-	return (ret);
+
+	pip = 0;
+	do {
+		ptr[pip] = res % 2, res /= 2, pip++;
+	} while (pip < teta);
+
+	pip = teta - 1;
+	do {
+		_putchar(ptr[pip] + '0'), pip--;
+	} while (pip >= 0);
+
+	free(ptr);
+	return (teta);
 }
