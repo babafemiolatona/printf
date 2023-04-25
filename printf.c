@@ -74,7 +74,7 @@ int _printf(const char *format, ...)
 		{"u", unsigned_int},
 		{"i", print_int},
 		{"b", _bin},
-		{"%r", _rev},
+		{"r", _rev},
 		{NULL, NULL}
 	};
 	va_list list;

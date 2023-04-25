@@ -1,97 +1,32 @@
 #include "main.h"
 
 /**
- * rev_str - reverses a given string in place
+ * _rev - prints a given string in reverse order
  *
- * @i: string to be reversed
+ * @args_arr: variable argument list containing the string to be printed
  *
- * Return: pointer to the reversed string
+ * Return: number of characters printed
  */
 
-char *rev_str(char *i)
+int _rev(va_list args_arr)
 {
-	int count, index;
-	char pip;
-	char *ret;
+	int _c, _p = 0;
+	char *pet = va_arg(args_arr, char*);
 
-	for (count = 0; i[count] != '\0'; count++)
+	if (pet == NULL)
 	{
-		ret = malloc(sizeof(char) * count + 1);
-	}
-	if (ret == NULL)
-	{
-		return (NULL);
+		pet = "(null)";
 	}
 
-	my_memcpy(ret, i, count);
+	do {
+		_p++;
+	} while (pet[_p] != '\0');
 
-	for (index = 0; index < count; index++, count--)
-	{
-		pip = ret[count - 1];
-		ret[count - 1] = ret[index];
-		ret[index] = pip;
-	}
-	return (ret);
-}
+	_c = (_p - 1);
+	do {
+		_putchar(pet[_c]);
+		_c--;
+	} while (_c >= 0);
 
-/**
- * my_memcpy - copies a specified number of bytes
- * from one memory location to another
- *
- * @end: destination memory location to copy to
- * @start: source memory location to copy from
- * @n: number of bytes to be copied
- *
- * Return: pointer to the destination memory location
- */
-
-char *my_memcpy(char *end, char *start, unsigned int n)
-{
-	char *dest_ptr = end;
-	char *src_ptr = start;
-
-	while (n--)
-	{
-		*dest_ptr++ = *src_ptr++;
-	}
-
-	return (end);
-}
-
-/**
- * _rev - prints a string in reverse order
- *
- * @args_list: va_list containing a single argument
- *
- * Return: The length of the printed string if successful,
- * -1 otherwise
- */
-
-int _rev(va_list args_list)
-{
-	int counter;
-	char *_a;
-	char *_b;
-
-	_a = va_arg(args_list, char *);
-
-	if (_a == NULL)
-	{
-		return (-1);
-	}
-
-	_b = rev_str(_a);
-
-	if (_b == NULL)
-	{
-		return (-1);
-	}
-
-	for (counter = 0; _b[counter] != '\0'; counter++)
-	{
-		_putchar(_b[counter]);
-	}
-
-	free(_b);
-	return (counter);
+	return (_p);
 }
