@@ -33,5 +33,7 @@ int print_num(va_list);
 int unsigned_num(unsigned int);
 int _bin(va_list);
 int _rev(va_list);
+char *rev_str(char *);
+char *my_memcpy(char *end, char *start, unsigned int n);
 
 #endif
