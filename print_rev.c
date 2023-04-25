@@ -10,7 +10,8 @@
 
 int _rev(va_list args_arr)
 {
-	int _c, _p = 0;
+	int _c;
+	int _p = 0;
 	char *pet = va_arg(args_arr, char*);
 
 	if (pet == NULL)
