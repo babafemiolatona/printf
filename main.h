@@ -32,5 +32,6 @@ int unsigned_int(va_list);
 int print_num(va_list);
 int unsigned_num(unsigned int);
 int _bin(va_list);
+int _rev(va_list);
 
 #endif
