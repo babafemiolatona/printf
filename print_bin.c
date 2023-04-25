@@ -25,7 +25,6 @@ int _bin(va_list args_list)
 
 	if (ptr == NULL)
 	{
-		free(ptr);
 		return (0);
 	}
 
